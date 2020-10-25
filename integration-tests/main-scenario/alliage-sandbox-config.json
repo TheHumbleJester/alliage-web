@@ -1,0 +1,16 @@
+{
+  "command": "ts-node -P <projectRoot>/tsconfig.json",
+  "copyFiles": ["<scenarioRoot>/src", "<scenarioRoot>/config"],
+  "linkModules": {
+    "alliage-webserver": "<projectRoot>/packages/webserver/dist",
+    "alliage-webserver-express": "<projectRoot>/packages/webserver-express/dist"
+  },
+  "alliageModules": [
+    "alliage-module-installer",
+    "alliage-lifecycle",
+    "alliage-di",
+    "alliage-config-loader",
+    "alliage-service-loader",
+    "alliage-process-manager"
+  ]
+}

@@ -1,0 +1,26 @@
+{
+  "name": "alliage-webserver-sandbox",
+  "version": "0.0.0",
+  "description": "Webserver sandbox for Alliage",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TheHumbleJester/alliage-web.git"
+  },
+  "author": "the.humble.jester@gmail.com",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/TheHumbleJester/alliage-web/issues"
+  },
+  "homepage": "https://github.com/TheHumbleJester/alliage-web#readme",
+  "peerDependencies": {
+    "alliage-sandbox": "^1.0.0"
+  },
+  "dependencies": {
+    "axios": "^0.21.0",
+    "get-port": "^5.1.1"
+  }
+}

@@ -1,0 +1,36 @@
+{
+  "name": "alliage-webserver-express",
+  "version": "0.0.0",
+  "description": "Express adapter module for Alliage Webserver",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/TheHumbleJester/alliage-web.git"
+  },
+  "author": "the.humble.jester@gmail.com",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/TheHumbleJester/alliage-web/issues"
+  },
+  "homepage": "https://github.com/TheHumbleJester/alliage-web#readme",
+  "alliageManifest": {
+    "type": "module",
+    "dependencies": [
+      "alliage-webserver"
+    ],
+    "installationProcedures": {
+      "copyFiles": [
+        [
+          "base-files/config.yaml",
+          "config/webserver-express.yaml"
+        ]
+      ]
+    }
+  },
+  "peerDependencies": {
+    "alliage-webserver": "~1.0.0"
+  }
+}

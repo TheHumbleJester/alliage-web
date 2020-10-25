@@ -1,0 +1,3 @@
+# Express settings. See (http://expressjs.com/en/api.html#app.settings.table)
+settings:
+  x-powered-by: false
