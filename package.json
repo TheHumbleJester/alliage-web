@@ -10,7 +10,7 @@
     "lint": "eslint . --ext .js --ext .ts",
     "lint:fix": "yarn lint --silent -- --fix",
     "test:unit": "NODE_ENV=test jest --maxWorkers=2 --coverage",
-    "test:integration": "NODE_ENV=test jest --maxWorkers=2 --rootDir=. -c ./integration-tests/jest.config.js",
+    "test:integration": "NODE_ENV=test jest --maxWorkers=2 --rootDir=. -c ./integration-tests/jest.config.js --forceExit",
     "test": "yarn lint && yarn test:unit && yarn test:integration",
     "upgrade-version": "sh scripts/upgrade-version.sh",
     "release": "sh scripts/release.sh"

@@ -23,6 +23,7 @@ function startSandbox(options?: Parameters<WebserverSandbox['start']>[0]) {
   });
   dummySandbox.run.mockReturnValueOnce({
     process: dummyProcess,
+    waitCompletion: () => Promise.resolve(),
   });
   const promise = webserverSandbox.start(options);
 

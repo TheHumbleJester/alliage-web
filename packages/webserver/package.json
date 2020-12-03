@@ -1,6 +1,6 @@
 {
   "name": "alliage-webserver",
-  "version": "0.0.0",
+  "version": "0.1.0.pre1",
   "description": "Webserver module for Alliage",
   "main": "index.js",
   "scripts": {
