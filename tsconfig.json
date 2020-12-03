@@ -1,0 +1,16 @@
+{
+  "extends": "./tsconfig.build.json",
+  "compilerOptions": {
+    "baseUrl": "./packages",
+    "rootDir": "./packages",
+    "paths": {
+      "alliage-webserver/*": [
+        "webserver/src/*"
+      ],
+      "alliage-webserver-express/*": [
+        "webserver-express/src/*"
+      ]
+    }
+  },
+  "exclude": [],
+}

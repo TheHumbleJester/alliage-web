@@ -1,0 +1,4 @@
+basePath: 'src'
+paths:
+  - 'controllers/**/*'
+  - 'middlewares/**/*'
