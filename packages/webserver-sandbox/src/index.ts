@@ -1,6 +1,4 @@
 /* eslint-disable max-classes-per-file */
-import { ChildProcess } from 'child_process';
-
 import { CommandOptions, Sandbox } from 'alliage-sandbox';
 import getPort from 'get-port';
 import axios, { AxiosInstance } from 'axios';
@@ -22,7 +20,7 @@ export class TimeoutExceededError extends Error {
 export class WebserverSandbox {
   private sandbox: Sandbox;
 
-  private process: ChildProcess | undefined;
+  private command: ReturnType<Sandbox['run']> | undefined;
 
   private started = false;
 
@@ -40,10 +38,10 @@ export class WebserverSandbox {
     timeout = 5000,
   }: WebserverOptions = {}) {
     const serverPort = port ?? (await getPort());
-    this.process = this.sandbox.run(
+    this.command = this.sandbox.run(
       ['web', serverPort.toString(), `--env=${environment}`],
       commandOptions,
-    ).process;
+    );
     this.client = axios.create({
       baseURL: `http${isSecure ? 's' : ''}://localhost:${serverPort}`,
     });
@@ -55,10 +53,10 @@ export class WebserverSandbox {
         () => reject(new TimeoutExceededError(output, errorOutput)),
         timeout,
       );
-      this.process!.stderr!.on('data', (data) => {
+      this.command!.process.stderr!.on('data', (data) => {
         errorOutput += data;
       });
-      this.process!.stdout!.on('data', (data) => {
+      this.command!.process.stdout!.on('data', (data) => {
         output += data;
         if (/Webserver started - Listening on: \d+/g.test(output)) {
           clearTimeout(timer);
@@ -82,21 +80,13 @@ export class WebserverSandbox {
 
   getProcess() {
     this.throwIfNotStarted();
-    return this.process;
+    return this.command!.process;
   }
 
   stop() {
     this.throwIfNotStarted();
-    const promise = new Promise((resolve) => {
-      const handleClose = () => {
-        this.process = undefined;
-        this.started = false;
-        resolve();
-      };
-      this.process!.on('close', handleClose);
-      this.process!.on('exit', handleClose);
-    });
-    this.process!.kill();
+    const promise = this.command!.waitCompletion();
+    this.command!.process.kill();
     return promise;
   }
 

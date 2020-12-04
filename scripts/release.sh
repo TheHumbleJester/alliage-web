@@ -1,17 +1,18 @@
 packageProperty=$(npm bin)/package-property
-version="$($packageProperty version lerna.json)"
+versionHasChanged=$(npm bin)/version-has-changed
 repo="$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME"
-$(npm bin)/version-has-changed lerna.json
-if [ $? -eq 0 ]; then
-  $(npm bin)/create-github-release $repo $version && echo "Release \"$version\" created on \"$repo\""
-  for f in packages/*; do
-    if [ -d "$f" ] && [ -e "$f/package.json" ]; then
+for f in packages/*; do
+  if [ -d "$f" ] && [ -e "$f/package.json" ]; then
+    $versionHasChanged "$f/package.json"
+    if [ $? -eq 0 ]; then
       cd "$f"
       name="$($packageProperty name)"
+      version="$($packageProperty version)"
       npm publish dist && echo "\"$name@$version\" has been successfully published on NPM"
+      echo "Published package $name@$version"
       cd - >/dev/null
+    else
+      echo "No need to publish $name package"
     fi
-  done
-else
-  echo "No need to publish packages"
-fi
+  fi
+done

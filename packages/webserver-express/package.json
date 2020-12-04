@@ -1,6 +1,6 @@
 {
   "name": "alliage-webserver-express",
-  "version": "0.0.0",
+  "version": "0.1.0-pre1",
   "description": "Express adapter module for Alliage Webserver",
   "main": "index.js",
   "scripts": {
@@ -31,6 +31,6 @@
     }
   },
   "peerDependencies": {
-    "alliage-webserver": "~1.0.0"
+    "alliage-webserver": "~0.1.0"
   }
 }
