@@ -61,15 +61,15 @@ export class WebProcess extends AbstractProcess {
     return this.middlewares.sort((m1, m2) => {
       // m1 before m2
       if (
-        (m1.getDependencies().length === 0 && m2.getDependencies().length > 0) ||
-        m2.getDependencies().includes(m1.constructor as typeof AbstractMiddleware)
+        m1.applyBefore().includes(m2.constructor as typeof AbstractMiddleware) ||
+        m2.applyAfter().includes(m1.constructor as typeof AbstractMiddleware)
       ) {
         return -1;
       }
       // m2 before m1
       if (
-        (m2.getDependencies().length === 0 && m1.getDependencies().length > 0) ||
-        m1.getDependencies().includes(m2.constructor as typeof AbstractMiddleware)
+        m1.applyAfter().includes(m2.constructor as typeof AbstractMiddleware) ||
+        m2.applyBefore().includes(m1.constructor as typeof AbstractMiddleware)
       ) {
         return 1;
       }

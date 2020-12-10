@@ -1963,37 +1963,39 @@ ajv@^6.10.0, ajv@^6.10.2, ajv@^6.12.0, ajv@^6.12.3, ajv@^6.12.4:
     json-schema-traverse "^0.4.1"
     uri-js "^4.2.2"
 
-alliage-config-loader@^1.1.1:
-  version "1.1.1"
-  resolved "https://registry.npmjs.org/alliage-config-loader/-/alliage-config-loader-1.1.1.tgz#9d4c31d1cf2d93fd2cfdbdf3ad4b035eb52a63e1"
-  integrity sha512-I//n2WdS2Q3oRb4Bd8HWT9AsYQcrZ+KKf2k+t1DqY83lNMWfRN/CMOJpxVMt+ncpsnPqNWfytxTuCF++DfqBUA==
+alliage-config-loader@^1.2.0-pre1:
+  version "1.2.0-pre1"
+  resolved "https://registry.npmjs.org/alliage-config-loader/-/alliage-config-loader-1.2.0-pre1.tgz#38504861405148e8143560309a644866ff8788aa"
+  integrity sha512-J3U2GFDbStptl0OV8CPmrNunlnnb7Rn6h4D4QLJWdXVvotFXyoPK4unBi0O6FQ7Cxn47MzU69jdVFxUJQgH6Gw==
   dependencies:
     ajv "^6.12.0"
     yaml "^1.7.2"
 
-alliage-di@^1.1.1:
-  version "1.1.1"
-  resolved "https://registry.npmjs.org/alliage-di/-/alliage-di-1.1.1.tgz#5a539eba4d9f1f0fc2fbef31cf84bdd78726883f"
-  integrity sha512-+lJpUkfTuf09DjYeEzjc1CTTNQm2TbzgRvQnuegZw/MOdQqX04nEx8je/b18L4rR4duV7w/FqXVqUCrtczibHQ==
+alliage-di@^1.2.0-pre1:
+  version "1.2.0-pre1"
+  resolved "https://registry.npmjs.org/alliage-di/-/alliage-di-1.2.0-pre1.tgz#8860e2e4358724175fb1567661243353a5825e54"
+  integrity sha512-gFNlDzu82cJMROiTpXGljTWVb8CmPbS5PerGlCVzazzJiXSwBIHSfnGNXvZug58nclsVkH66p3fiAIEr7Ssd6w==
+  dependencies:
+    lodash.get "^4.4.2"
 
-alliage-lifecycle@^1.1.1:
-  version "1.1.1"
-  resolved "https://registry.npmjs.org/alliage-lifecycle/-/alliage-lifecycle-1.1.1.tgz#e920053237e2b68eb589dc46c128ce96d5091a46"
-  integrity sha512-p5vr8+ArCAZ1Qm38bwegymncAb81zg1mlM8TaWk+h0ocUj9v4JpohxtJQxgrikXrBB9lFCmKwqpT48xspiDWNA==
+alliage-lifecycle@^1.2.0-pre1:
+  version "1.2.0-pre1"
+  resolved "https://registry.npmjs.org/alliage-lifecycle/-/alliage-lifecycle-1.2.0-pre1.tgz#0797778a4e94722de6b5824e718979fb5a34ed76"
+  integrity sha512-lte25UTmzIRxG7obEyRGzEL7Tg0FlZB4Ns6T2/GJhEzjUt/2O8UBivQSnhM14SJrff07ktq7ZAk1fPPJ5mLndg==
 
-alliage-module-installer@^1.1.1:
-  version "1.1.1"
-  resolved "https://registry.npmjs.org/alliage-module-installer/-/alliage-module-installer-1.1.1.tgz#021ba6f966a479d10d3fb1130b8aa70d1bd97d3a"
-  integrity sha512-7TFn8jGMCizcr5uAZNTBS1ddO4dhx4sY79FxYPXG4EtarwXE05ZYSZt0Ywdv9byTE1BCchehN0D4ebVuyKg6GA==
+alliage-module-installer@^1.2.0-pre1:
+  version "1.2.0-pre1"
+  resolved "https://registry.npmjs.org/alliage-module-installer/-/alliage-module-installer-1.2.0-pre1.tgz#ab8ee86a16509a8c91cba818d1cd728ed965b24e"
+  integrity sha512-ZCkgPAZ4IkJp8Z/KIMCu3a630vjKaLUs8A2yaSXzC3IKZQmgvAFaFYNfnH+gsTH+eqg12VbI6o9LEtS4AAUTXg==
   dependencies:
     ajv "^6.12.0"
     fs-extra "^9.0.0"
     glob "^7.1.6"
 
-alliage-process-manager@^1.1.1:
-  version "1.1.1"
-  resolved "https://registry.npmjs.org/alliage-process-manager/-/alliage-process-manager-1.1.1.tgz#e2bc02dbba83516d0246872cdbd9e40a79127a39"
-  integrity sha512-1A+P5bgYCKWioec7wsG46PGcLWdmNzHbitcnnenyp65/yR8jSFRqlikden/BWD5yb+5CLEhBG4BZXfSM387Vlg==
+alliage-process-manager@^1.2.0-pre1:
+  version "1.2.0-pre1"
+  resolved "https://registry.npmjs.org/alliage-process-manager/-/alliage-process-manager-1.2.0-pre1.tgz#f654bf02971d3bf189f786e63e8e31f40ef86e61"
+  integrity sha512-vrsGa6QL+EmbHPGG8ujpkoax6hjCC41JBaeBn3yBO0q6vqpZT4esXMr89FoEYylMdPf4MyG1XP4Cp50bDxhj7w==
 
 alliage-sandbox@^1.0.0:
   version "1.0.0"
@@ -2002,10 +2004,10 @@ alliage-sandbox@^1.0.0:
   dependencies:
     fs-extra "^9.0.0"
 
-alliage-service-loader@^1.1.1:
-  version "1.1.1"
-  resolved "https://registry.npmjs.org/alliage-service-loader/-/alliage-service-loader-1.1.1.tgz#1f1ad0b0c02cf0f3477bd5ea7eb95749f6bd0e8a"
-  integrity sha512-RVUXtEaBPCarvHZEuBQaa8L3lpU0skTgMMSaCpS9XcXJ2fvvMxSA44ui5pHdqU39UiStoVrbCxc04stINSeHPA==
+alliage-service-loader@^1.2.0-pre1:
+  version "1.2.0-pre1"
+  resolved "https://registry.npmjs.org/alliage-service-loader/-/alliage-service-loader-1.2.0-pre1.tgz#c8439693b3f29f63aa9fc8df6efbee3b31575a88"
+  integrity sha512-dFPM6qDsClHp0efxaYhVoFgpVxkC0pHGdyOjjGX9RYhkfIOAKV9RExTqaLVuwTon0yfjfOg3U/Yyizuu3/ZNCA==
   dependencies:
     glob "^7.1.6"
 

@@ -34,8 +34,8 @@
   },
   "peerDependencies": {
     "alliage": "~1.0.0",
-    "alliage-module-installer": "~1.1.0",
-    "alliage-config-loader": "~1.1.0",
-    "alliage-process-manager": "~1.1.0"
+    "alliage-module-installer": "~1.2.0-pre1",
+    "alliage-config-loader": "~1.2.0-pre1",
+    "alliage-process-manager": "~1.2.0-pre1"
   }
 }

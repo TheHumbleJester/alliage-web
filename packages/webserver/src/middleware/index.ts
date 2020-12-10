@@ -3,7 +3,9 @@ import { REQUEST_PHASE } from '../adapter';
 import { Context } from './context';
 
 export abstract class AbstractMiddleware {
-  getDependencies = (): Array<typeof AbstractMiddleware> => [];
+  applyBefore = (): Array<typeof AbstractMiddleware> => [];
+
+  applyAfter = (): Array<typeof AbstractMiddleware> => [];
 
   abstract getRequestPhase(): REQUEST_PHASE;
 

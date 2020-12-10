@@ -19,24 +19,56 @@ class DummyAdapter extends AbstractAdapter {
 class DummyController1 extends AbstractController {}
 class DummyController2 extends AbstractController {}
 
-function createMiddleware(deps: typeof AbstractMiddleware[]) {
-  return class Middleware extends AbstractMiddleware {
+function createMiddleware(
+  name: string,
+  after: () => typeof AbstractMiddleware[] = () => [],
+  before: () => typeof AbstractMiddleware[] = () => [],
+) {
+  class Middleware extends AbstractMiddleware {
+    public name = name;
+
     getRequestPhase = () => REQUEST_PHASE.PRE_CONTROLLER;
 
-    getDependencies = () => deps;
+    applyBefore = () => before();
+
+    applyAfter = () => after();
 
     apply() {
       // empty
     }
-  };
+  }
+
+  return Middleware;
 }
 
-const Middleware1 = createMiddleware([]);
-const Middleware2 = createMiddleware([]);
-const Middleware3 = createMiddleware([Middleware1]);
-const Middleware4 = createMiddleware([Middleware2, Middleware1]);
-const Middleware5 = createMiddleware([Middleware1, Middleware3]);
-const Middleware6 = createMiddleware([Middleware1, Middleware3]);
+let Middleware2: any;
+let Middleware3: any;
+let Middleware4: any;
+let Middleware5: any;
+let Middleware6: any;
+
+const Middleware1 = createMiddleware(
+  'Middleware1',
+  () => [],
+  () => [Middleware2!],
+);
+Middleware2 = createMiddleware(
+  'Middleware2',
+  () => [],
+  () => [Middleware3!],
+);
+Middleware3 = createMiddleware(
+  'Middleware3',
+  () => [Middleware1!],
+  () => [Middleware4!],
+);
+Middleware4 = createMiddleware(
+  'Middleware4',
+  () => [],
+  () => [Middleware5!, Middleware6!],
+);
+Middleware5 = createMiddleware('Middleware5', () => [Middleware1, Middleware3!]);
+Middleware6 = createMiddleware('Middleware6', () => [Middleware1, Middleware3!]);
 
 describe('webserver/process', () => {
   describe('WebProcess', () => {
@@ -60,7 +92,7 @@ describe('webserver/process', () => {
         host: 'localhost',
       },
       adapter,
-      [middleware3, middleware1, middleware4, middleware2, middleware5, middleware6],
+      [middleware3, middleware2, middleware4, middleware1, middleware5, middleware6],
       [controller1, controller2],
     );
 
@@ -86,7 +118,7 @@ describe('webserver/process', () => {
         await webProcess.execute(args);
       });
 
-      it('should set the middlewared in the right order on the adapter', () => {
+      it('should set the middleware in the right order on the adapter', () => {
         expect(adapter.setMiddlewares).toHaveBeenCalledWith([
           middleware1,
           middleware2,
