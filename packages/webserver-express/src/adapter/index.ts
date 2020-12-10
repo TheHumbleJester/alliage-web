@@ -75,10 +75,12 @@ export class ExpressAdapter extends AbstractAdapter {
       [[], []] as [AbstractMiddleware[], AbstractMiddleware[]],
     );
 
-    this.app.use((req, res, next) => {
+    this.app.use(async (req, res, next) => {
       const request = this.getRequest(req);
       const response = this.getResponse(res);
-      this.eventManager.emit(...AdapterPreRequestEvent.getParams(request, response, ADAPTER_NAME));
+      await this.eventManager.emit(
+        ...AdapterPreRequestEvent.getParams(request, response, ADAPTER_NAME),
+      );
       next();
     });
 
@@ -104,12 +106,12 @@ export class ExpressAdapter extends AbstractAdapter {
                   [request, response, ADAPTER_NAME],
                   ADAPTER_NAME,
                 );
-                this.eventManager.emit(preControllerEvent.getType(), preControllerEvent);
+                await this.eventManager.emit(preControllerEvent.getType(), preControllerEvent);
                 const returnedValue = await handler.call(
                   controller,
                   ...preControllerEvent.getArguments(),
                 );
-                this.eventManager.emit(
+                await this.eventManager.emit(
                   ...AdapterPostControllerEvent.getParams(
                     controller,
                     handler,
@@ -129,13 +131,15 @@ export class ExpressAdapter extends AbstractAdapter {
         );
       });
     });
-    this.app.use((req: NativeRequest, res: NativeResponse, next: NextFunction) => {
+    this.app.use(async (req: NativeRequest, res: NativeResponse, next: NextFunction) => {
       const request = this.getRequest(req);
       const response = this.getResponse(res);
 
       if (!request.getExtraPayload('controller_matched')) {
         response.setStatus(404).setBody('Not found');
-        this.eventManager.emit(...AdapterNotFoundEvent.getParams(request, response, ADAPTER_NAME));
+        await this.eventManager.emit(
+          ...AdapterNotFoundEvent.getParams(request, response, ADAPTER_NAME),
+        );
         response.end();
       }
       next();
@@ -145,11 +149,13 @@ export class ExpressAdapter extends AbstractAdapter {
 
     // Remove unique Request and Response for the given req and res
     // and end the response
-    this.app.use((req, res) => {
+    this.app.use(async (req, res) => {
       const response = this.getResponse(res);
       const request = this.getRequest(req);
       response.end();
-      this.eventManager.emit(...AdapterPostRequestEvent.getParams(request, response, ADAPTER_NAME));
+      await this.eventManager.emit(
+        ...AdapterPostRequestEvent.getParams(request, response, ADAPTER_NAME),
+      );
       this.removeRequest(req);
       this.removeResponse(res);
     });
@@ -165,8 +171,8 @@ export class ExpressAdapter extends AbstractAdapter {
           )
         : http.createServer(this.app);
 
-      this.server.listen(port, host as any, () => {
-        this.eventManager.emit(
+      this.server.listen(port, host as any, async () => {
+        await this.eventManager.emit(
           ...AdapterServerStartedEvent.getParams({ port, host, ...options }, ADAPTER_NAME),
         );
         resolve();
@@ -180,12 +186,12 @@ export class ExpressAdapter extends AbstractAdapter {
         resolve();
         return;
       }
-      this.server.close((err?: Error) => {
+      this.server.close(async (err?: Error) => {
         if (err) {
           reject(err);
           return;
         }
-        this.eventManager.emit(...AdapterServerStoppedEvent.getParams(ADAPTER_NAME));
+        await this.eventManager.emit(...AdapterServerStoppedEvent.getParams(ADAPTER_NAME));
         resolve();
       });
     });

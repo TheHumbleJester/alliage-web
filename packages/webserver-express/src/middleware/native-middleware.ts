@@ -6,7 +6,8 @@ type Func = (...args: any) => any;
 
 interface Options<T extends Func> {
   requestPhase?: REQUEST_PHASE;
-  dependencies?: Array<typeof AbstractMiddleware>;
+  applyBefore?: Array<typeof AbstractMiddleware>;
+  applyAfter?: Array<typeof AbstractMiddleware>;
   args?: (...args: any[]) => [...Parameters<T>] | undefined;
 }
 
@@ -14,14 +15,17 @@ export function createNativeMiddleware<T extends Func>(
   nativeMiddleware: T,
   {
     requestPhase = REQUEST_PHASE.PRE_CONTROLLER,
-    dependencies = [],
+    applyBefore = [],
+    applyAfter = [],
     args: argsBuilder,
   }: Options<T> = {},
 ) {
   return class NativeMiddleware extends AbstractMiddleware {
     public middleware: Func;
 
-    getDependencies = () => dependencies;
+    applyBefore = () => applyBefore;
+
+    applyAfter = () => applyAfter;
 
     getRequestPhase = () => requestPhase;
 

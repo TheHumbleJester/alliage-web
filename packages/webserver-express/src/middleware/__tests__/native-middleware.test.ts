@@ -1,3 +1,4 @@
+/* eslint-disable max-classes-per-file */
 import { NextFunction, Request as NativeRequest, Response as NativeResponse } from 'express';
 
 import { REQUEST_PHASE } from '../../../../webserver/src/adapter';
@@ -19,8 +20,12 @@ describe('webserver-express/middleware/native-middleware', () => {
         expect(middleware).toBeInstanceOf(AbstractMiddleware);
       });
 
-      it('should have 0 dependencies by default', () => {
-        expect(middleware.getDependencies()).toEqual([]);
+      it('should have 0 applyBefore by default', () => {
+        expect(middleware.applyBefore()).toEqual([]);
+      });
+
+      it('should have 0 applyAfter by default', () => {
+        expect(middleware.applyAfter()).toEqual([]);
       });
 
       it('should have a REQUEST_PHASE.PRE_CONTROLLER by default', () => {
@@ -52,7 +57,15 @@ describe('webserver-express/middleware/native-middleware', () => {
     });
 
     describe('complex use case', () => {
-      class DummyDependency extends AbstractMiddleware {
+      class DummyDependency1 extends AbstractMiddleware {
+        getRequestPhase = () => REQUEST_PHASE.POST_CONTROLLER;
+
+        apply() {
+          // empty
+        }
+      }
+
+      class DummyDependency2 extends AbstractMiddleware {
         getRequestPhase = () => REQUEST_PHASE.POST_CONTROLLER;
 
         apply() {
@@ -70,11 +83,16 @@ describe('webserver-express/middleware/native-middleware', () => {
       const NativeMiddleware = createNativeMiddleware(dummyMiddlewareCreator, {
         args: argsBuilder,
         requestPhase: REQUEST_PHASE.POST_CONTROLLER,
-        dependencies: [DummyDependency],
+        applyBefore: [DummyDependency1],
+        applyAfter: [DummyDependency2],
       });
       const middleware = new NativeMiddleware('dep1', 'dep2', 'dep3');
-      it('should have the dependencies defined during the creation', () => {
-        expect(middleware.getDependencies()).toEqual([DummyDependency]);
+      it('should have the applyBefore defined during the creation', () => {
+        expect(middleware.applyBefore()).toEqual([DummyDependency1]);
+      });
+
+      it('should have the applyAfter defined during the creation', () => {
+        expect(middleware.applyAfter()).toEqual([DummyDependency2]);
       });
 
       it('should have a REQUEST_PHASE.POST_CONTROLLER as defined during the creation', () => {

@@ -31,6 +31,6 @@
     }
   },
   "peerDependencies": {
-    "alliage-webserver": "~0.1.0"
+    "alliage-webserver": "~0.1.0-pre1"
   }
 }

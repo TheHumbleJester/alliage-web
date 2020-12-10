@@ -9,10 +9,16 @@ describe('webserver/middleware', () => {
       apply = () => undefined;
     }
 
-    describe('#getDependencies', () => {
-      const middleware = new DummyMiddleware();
+    const middleware = new DummyMiddleware();
+    describe('#applyBefore', () => {
       it('should return a empty array by default', () => {
-        expect(middleware.getDependencies()).toEqual([]);
+        expect(middleware.applyBefore()).toEqual([]);
+      });
+    });
+
+    describe('#applyAfter', () => {
+      it('should return a empty array by default', () => {
+        expect(middleware.applyAfter()).toEqual([]);
       });
     });
   });
