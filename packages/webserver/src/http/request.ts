@@ -2,7 +2,7 @@ import { Duplex, Readable } from 'stream';
 
 import { HTTP_METHOD, Params } from '.';
 
-export abstract class AbstractRequest<B = any, N = any> {
+export abstract class AbstractRequest<P = Params, Q = Params, B = any, N = any> {
   // Express Request
   abstract getBaseUrl(): string;
 
@@ -24,13 +24,13 @@ export abstract class AbstractRequest<B = any, N = any> {
 
   abstract getOriginalUrl(): string;
 
-  abstract getParams(): Params;
+  abstract getParams(): P;
 
   abstract getPath(): string;
 
   abstract getProtocol(): string;
 
-  abstract getQuery(): Params;
+  abstract getQuery(): Q;
 
   abstract isSecure(): boolean;
 
