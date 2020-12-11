@@ -4,7 +4,12 @@ import { Request as NativeRequest } from 'express';
 import { AbstractRequest } from 'alliage-webserver/http/request';
 import { HTTP_METHOD, Params } from 'alliage-webserver/http';
 
-export class Request<B = any> extends AbstractRequest<B, NativeRequest> {
+export class Request<P = Params, Q = Params, B = any> extends AbstractRequest<
+  P,
+  Q,
+  B,
+  NativeRequest
+> {
   private extraPayload: Record<string, unknown> = {};
 
   constructor(private nativeRequest: NativeRequest) {
@@ -53,7 +58,7 @@ export class Request<B = any> extends AbstractRequest<B, NativeRequest> {
   }
 
   getParams() {
-    return this.nativeRequest.params;
+    return (this.nativeRequest.params as unknown) as P;
   }
 
   getPath() {
@@ -65,7 +70,7 @@ export class Request<B = any> extends AbstractRequest<B, NativeRequest> {
   }
 
   getQuery() {
-    return this.nativeRequest.query as Params;
+    return (this.nativeRequest.query as unknown) as Q;
   }
 
   isSecure() {
